@@ -1,5 +1,3 @@
-
-
 # 获取当前微信客户端
 from wxauto import wxauto
 
