@@ -26,24 +26,27 @@ params = "korder=SU"
 cnki_url = f"{base_url}{params}&kw={encoded_word}"
 driver = webdriver.Edge()
 driver.get(cnki_url)
-
 #
-checkbox = driver.find_element(By.ID, 'selectCheckAll1')
+wait = WebDriverWait(driver, 20)
+checkbox = wait.until(EC.presence_of_element_located((By.ID, 'selectCheckAll1')))
 # 点击全选按钮
 checkbox.click()
 
 # 创建WebDriverWait对象，并明确指定最大等待时间为10秒
-wait = WebDriverWait(driver, 20)
+
 
 
 # 查找"导出与分析"的元素并模拟鼠标悬停
-dropdown_analysis_btns = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "dropdown-analysis-btns")))
+dropdown_analysis_btns = wait.until(EC.presence_of_element_located((By.ID, "batchOpsBox")))
+wait = WebDriverWait(driver, 1)
+dropdown_analysis_btns = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "icon-d")))
+wait = WebDriverWait(driver, 1)
 dropdown_analysis_btns.click()
-
-# 等待"导出文献"的元素出现
 export_literature = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "export")))
-export_literature.click()
-
+wait = WebDriverWait(driver, 1)
+dropdown_analysis_btns = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "secondUl")))
+wait = WebDriverWait(driver, 1)
+dropdown_analysis_btns.click()
 # 等待"EndNote"的元素出现并模拟鼠标悬停
 endnote_export_link = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "a[exporttype='EndNote']")))
 endnote_export_link.click()

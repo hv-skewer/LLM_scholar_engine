@@ -1,17 +1,1 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-
-# 创建WebDriverWait对象，并明确指定最大等待时间为10秒
-wait = WebDriverWait(driver, 10)
-
-try:
-    # 等待直到EndNote导出链接变得可点击
-    endnote_export_link = wait.until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, "a[exporttype='EndNote']"))
-    )
-    # 点击EndNote导出链接
-    endnote_export_link.click()
-except TimeoutException:
-    print("Element not clickable within the given time frame!")
+<ul class="dropdown-analysis-btns" id="batchOpsBox"><li class="bulkdownload export"><a href="javascript:void(0)">批量下载</a></li><li><a href="javascript:void(0)">导出与分析</a><i class="icon-d"></i><ul><li class="export"><a href="javascript:void(0)">导出文献</a> <i class="icon-r"></i><ul class="secondUl"><li><a href="javascript:void(0)" exporttype="GBTREFER">GB/T 7714-2015 格式引文</a></li><li><a href="javascript:void(0)" exporttype="elearning">知网研学（原E-Study）</a></li><li><a href="javascript:void(0)" exporttype="REFER">CAJ-CD 格式引文</a></li><li><a href="javascript:void(0)" exporttype="MLA">MLA格式引文</a></li><li><a href="javascript:void(0)" exporttype="APA">APA格式引文</a></li><li><a href="javascript:void(0)" exporttype="NEW">查新（引文格式）</a></li><li><a href="javascript:void(0)" exporttype="newdefine">查新（自定义引文格式）</a></li><li><a href="javascript:void(0)" exporttype="Refworks">Refworks</a></li><li><a href="javascript:void(0)" exporttype="EndNote">EndNote</a></li><li><a href="javascript:void(0)" exporttype="NoteExpress">NoteExpress</a></li><li><a href="javascript:void(0)" exporttype="NodeFirst">NoteFirst</a></li><li><a href="javascript:void(0)" exporttype="BibTex">BibTex</a></li><li><a href="javascript:void(0)" exporttype="selfDefine">自定义</a></li></ul></li><li id="analysisLi"><a href="javascript:void(0)">可视化分析</a><i class="icon-r"></i><ul class="secondUl"><li id="anisys_select"><a href="javascript:void(0)">已选结果分析(<span>0</span>)</a></li><li id="anisys_all"><a href="javascript:void(0)">全部检索结果分析</a></li></ul></li></ul></li></ul>
