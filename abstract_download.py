@@ -10,12 +10,8 @@ from selenium.webdriver.chrome.options import Options  # 导入Options模块，�
 from selenium.webdriver.common.action_chains import ActionChains
 from urllib.parse import quote  # 导入quote函数，用于URL编码
 from selenium.webdriver.chrome.service import Service
-def scriptdownload():
+def scriptdownload(word):
     service = Service()
-
-    # 提示用户输入关键词
-    print("请输入提示词：")
-    word = input()
     # 使用quote函数对用户输入的关键词进行URL编码
     encoded_word = quote(word)
 
