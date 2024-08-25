@@ -1,52 +1,38 @@
 import requests
 from bs4 import BeautifulSoup
 import os
+import pyautogui
+import ast
+import time
+from selenium import webdriver  # 导入Selenium中的webdriver模块，用于控制浏览器
+from selenium.webdriver.common.by import By  # 导入By模块，用于定位元素
+from selenium.webdriver.common.keys import Keys  # 导入Keys模块，用于模拟键盘输入
+from selenium.webdriver.support.ui import WebDriverWait  # 导入WebDriverWait模块，用于显式等待
+from selenium.webdriver.support import expected_conditions as EC  # 导入expected_conditions模块，用于设置等待条件
+from selenium.common.exceptions import TimeoutException  # 导入TimeoutException，用于处理超时异常
+from selenium.webdriver.chrome.service import Service  # 导入Service模块，用于Chrome服务
+from selenium.webdriver.chrome.options import Options  # 导入Options模块，用于配置Chrome选项
+from selenium.webdriver.common.action_chains import ActionChains
+from urllib.parse import quote  # 导入quote函数，用于URL编码
+from selenium.webdriver.chrome.service import Service
+def download(asset,absurl,kw):
+    #asset应该是列表形式，包含文件编号
+    #absurl是网页地址
+    #kw是关键字
+    service = Service()
+    true_asset=ast.literal_eval(asset)
+    options = webdriver.ChromeOptions()
+    options.add_argument("--start-maximized")  # 最大化窗口
+    driver = webdriver.Chrome(service=service)
+    driver.get(absurl)  # 打开知网搜索页面
+    wait = WebDriverWait(driver, 20)  # 创建WebDriverWait对象，最大等待时间为20秒
+    for doc in true_asset:
+        location=f".result-table-list > tbody > tr:nth-child("+str(doc) +f") > .seq > input"
+        checkbox = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, location)))  # 等待并找到全选按钮
+        checkbox.click()
+    #批量下载
+    download_btn = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".bulkdownload export")))  # 等待并找到下载按钮
+    download_btn.click()
 
-def download_pdf(url, save_path):
-    """
-    下载指定URL的PDF文件到指定路径。
-    
-    参数:
-    url (str): PDF文件的URL地址。
-    save_path (str): 保存PDF文件的本地路径。
-    """
-    response = requests.get(url)
-    if response.status_code == 200:
-        with open(save_path, 'wb') as f:
-            f.write(response.content)
-            print(f"文件已保存至: {save_path}")
-    else:
-        print("下载失败，状态码：", response.status_code)
-
-def fetch_pdf_links_from_page(url):
-    """
-    从给定的网页URL中提取所有PDF链接。
-    
-    参数:
-    url (str): 包含PDF链接的网页地址。
-    
-    返回值:
-    list: PDF链接列表。
-    """
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    pdf_links = [link.get('href') for link in soup.find_all('a', href=True) if link.get('href').endswith('.pdf')]
-    return pdf_links
-
-if __name__ == "__main__":
-    # 示例网页URL，请替换为合法且允许爬取的网页地址
-    example_url = "http://example.com/pdfs"
-    
-    # 获取PDF链接
-    pdf_links = fetch_pdf_links_from_page(example_url)
-    
-    # 设置保存目录
-    save_directory = "./downloaded_pdfs"
-    if not os.path.exists(save_directory):
-        os.makedirs(save_directory)
-    
-    # 下载PDF文件
-    for idx, link in enumerate(pdf_links):
-        file_name = f"file_{idx}.pdf"
-        full_path = os.path.join(save_directory, file_name)
-        download_pdf(link, full_path)
+    # 等待下载完成
+    time.sleep(60)

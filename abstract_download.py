@@ -54,3 +54,4 @@ def scriptdownload(word):
     export=wait.until(EC.presence_of_element_located((By.ID, "litotxt")))
     export.click()
     time.sleep(5)
+    return cnki_url
