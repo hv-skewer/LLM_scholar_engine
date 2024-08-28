@@ -31,6 +31,7 @@ def download(asset,absurl,kw):
         checkbox = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, location)))  # 等待并找到全选按钮
         checkbox.click()
     #批量下载
+    driver.execute_script("window.scrollTo(0, 0);")  # 滚动到页面顶部
     download_btn = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".bulkdownload export")))  # 等待并找到下载按钮
     download_btn.click()
 

@@ -45,13 +45,26 @@ def scriptdownload(word):
     endnote_export_link.click()  # 点击EndNote导出链接
     time.sleep(2)
     driver.switch_to.window(driver.window_handles[1])
-    export=wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#result > ul > div > label:nth-child(9)")))
-    export.click()
-    export=wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#result > ul > div > label:nth-child(11)")))
-    export.click()
+    try:
+        # 尝试执行等待元素出现的代码
+        export = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#result > ul > div > label:nth-child(9)")))
+        export.click()
+    except TimeoutException:
+        # 如果等待超时，则执行异常处理代码
+        print("等待元素超时")
+        # 可以选择重新尝试、跳过、记录日志或进行其他操作
+    try:
+        # 尝试执行等待元素出现的代码
+        export = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#result > ul > div > label:nth-child(11)")))
+        export.click()
+    except TimeoutException:
+        # 如果等待超时，则执行异常处理代码
+        print("等待元素超时")
+        # 可以选择重新尝试、跳过、记录日志或进行其他操作
+    
     export=wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#result > ul > div > div > ul")))
     export.click()
     export=wait.until(EC.presence_of_element_located((By.ID, "litotxt")))
     export.click()
-    time.sleep(5)
+    time.sleep(3)
     return cnki_url

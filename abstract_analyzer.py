@@ -36,7 +36,13 @@ def analyze(raw,kw):
         time.sleep(0.5)
         pyautogui.click(1330,1350)  # Replace with the actual coordinates of the Zhipuqingyan application
         time.sleep(0.5)
-        modified_2=str(u"请根据以下提问：“")+str(raw)+str("”以及关键词：“")+str(kw)+str("”在我给出的附件文件中选出十篇最可能找到回答问题的相关内容的文章，并以列表的形式，按照可能性从高到低给出文件名，作为你的回答。请回答阿拉伯数字序号，并采用严格的python列表格式，如[1,2,3,4,5,6,7,8,9,10]。")
+        modified_2 = "".join([
+    str(u"请根据以下提问：“"),
+    str(raw),
+    str("”以及关键词：“"),
+    str(kw.replace("\n", "")),
+    str("”在我给出的附件文件中选出十篇最可能找到回答问题的相关内容的文章，并以列表的形式，按照可能性从高到低给出文件名，作为你的回答。请回答阿拉伯数字序号，并采用严格的python列表格式，如[1,2,3,4,5,6,7,8,9,10]。")
+])
         keyboard.write(modified_2)
         time.sleep(0.5)
         pyautogui.press('enter')
@@ -44,6 +50,7 @@ def analyze(raw,kw):
         pyautogui.click(770,675)
         import pyperclip
         asset = pyperclip.paste()
+        return asset
 
     # 调用打开智谱清言函数
-    open_zhipuqingyan()
+    return open_zhipuqingyan()
