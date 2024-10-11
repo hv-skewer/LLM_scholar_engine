@@ -1,4 +1,4 @@
-import requests
+import requsts
 from bs4 import BeautifulSoup
 import os
 import pyautogui
